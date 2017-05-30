@@ -1,0 +1,41 @@
+---
+- name: Configuration After Build
+  hosts: packer 
+  gather_facts: True 
+  tasks:
+    - name: packages to install
+      yum:
+        pkg: "{{ item }}"
+        state: latest
+      with_items:
+        - "*"
+        - curl
+        - openssh-server
+        - ca-certificates
+        - tuned
+        - tuned-utils
+
+    - name: yum clean all
+      command: yum clean all
+
+    - name: Start tuned
+      systemd:
+        name: tuned 
+        state: started
+        enabled: True
+
+    - name: Tuned virtual-guest profile
+      command: tuned-adm profile virtual-guest
+
+    - name: write to end of disk
+      shell: "dd if=/dev/zero of=/EMPTY bs=1M"
+      ignore_errors: True
+
+    # This is raw because the disk is full and there
+    # will not be room to upload a python script to the 
+    # machine.
+    - name: delete EMPTY
+      raw: rm -f /EMPTY
+
+    - name: sync filesystem
+      command: sync
