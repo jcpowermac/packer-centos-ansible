@@ -28,6 +28,9 @@ spec:
     node-role.kubernetes.io/compute: 'true'
 """) {
     node(label) {
+        stage('checkout') {
+            checkout scm
+        }
         stage('Integration Test') {
             container('jnlp') {
                 sh "ls -alh /opt/app-root/bin/packer"
