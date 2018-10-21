@@ -1,3 +1,4 @@
+#!/usr/bin/env groovy
 
 def label = "packer-${UUID.randomUUID().toString()}"
 
@@ -33,6 +34,8 @@ spec:
         }
         stage('Integration Test') {
             container('jnlp') {
+                sh "find ."
+
                 sh "ls -alh /opt/app-root/bin/packer"
                 sh "ls -alh /dev/kvm"
                 sh "/opt/app-root/bin/packer build -debug centos.json"
