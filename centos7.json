@@ -1,16 +1,15 @@
 {
   "provisioners": [{
     "type": "ansible",
-    "playbook_file": "/opt/centos-artifacts/main.yml",
+    "playbook_file": "main.yml",
     "groups": ["packer"]
   }],
-  "builders": [{ 
+  "builders": [{
       "name": "centos",
       "vm_name": "centos.qcow2",
       "type": "qemu",
-      "iso_checksum_type": "sha256",
-      "iso_checksum": "27bd866242ee058b7a5754e83d8ee8403e216b93d130d800852a96f41c34d86a",
-      "iso_url": "/build/centos.iso",
+      "iso_checksum_type": "none",
+      "iso_url": "http://isoredirect.centos.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1804.iso",
       "output_directory": "/build/output",
       "ssh_wait_timeout": "30s",
       "shutdown_command": "shutdown -P now",
@@ -18,7 +17,7 @@
       "format": "qcow2",
       "headless": true,
       "accelerator": "kvm",
-      "http_directory": "/opt/centos-artifacts/kickstart",
+      "http_directory": "kickstart",
       "http_port_min": 10082,
       "http_port_max": 10089,
       "ssh_host_port_min": 2222,
@@ -34,51 +33,6 @@
       "qemu_binary": "/usr/bin/qemu-kvm",
       "boot_command": [
         "<tab> append initrd=initrd.img inst.text inst.gpt inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
-      ]},
-      {
-      "name": "centos-efi",
-      "vm_name": "centos-efi.qcow2",
-      "type": "qemu",
-      "iso_checksum_type": "sha256",
-      "iso_checksum": "27bd866242ee058b7a5754e83d8ee8403e216b93d130d800852a96f41c34d86a",
-      "iso_url": "/build/centos.iso",
-      "output_directory": "/build/output",
-      "ssh_wait_timeout": "30s",
-      "shutdown_command": "shutdown -P now",
-      "disk_size": 8192,
-      "format": "qcow2",
-      "headless": true,
-      "accelerator": "kvm",
-      "http_directory": "/opt/centos-artifacts/kickstart",
-      "http_port_min": 10082,
-      "http_port_max": 10089,
-      "ssh_host_port_min": 2222,
-      "ssh_host_port_max": 2229,
-      "ssh_username": "root",
-      "ssh_password": "changeme",
-      "ssh_port": 22,
-      "ssh_wait_timeout": "90m",
-      "net_device": "virtio-net",
-      "disk_interface": "virtio-scsi",
-      "vnc_port_min": 5901,
-      "vnc_port_max": 5901,
-      "qemu_binary": "/usr/bin/qemu-kvm",
-      "qemuargs": [["-bios","/usr/share/edk2/ovmf/OVMF_CODE.fd"]],
-      "boot_command": [
-        "<wait>c<wait>",
-        "linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:LABEL=CentOS\\x207\\x20x86_64 inst.repo=cdrom inst.ks=http://{{.HTTPIP}}:{{.HTTPPort}}/ks.cfg quiet<enter>",
-        "initrdefi /images/pxeboot/initrd.img<enter>",
-        "<wait>boot<enter>"
       ]
-    }],
-    "post-processors": [
-    {
-        "type": "shell-local",
-        "inline": "qemu-img convert -f qcow2 /build/output/{{build_name}}.qcow2 -O vhdx -o subformat=dynamic /build/output/{{build_name}}.vhdx",
-        "only": ["centos-efi"]
-    },{
-        "type": "shell-local",
-        "inline": "qemu-img convert -f qcow2 /build/output/{{build_name}}.qcow2 -O vmdk /build/output/{{build_name}}.vmdk",
-        "only": ["centos"]
-    }]
+  }]
 }
