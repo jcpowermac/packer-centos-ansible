@@ -34,7 +34,7 @@ spec:
         }
         stage('Integration Test') {
             container('jnlp') {
-                sh "find ."
+                sh "id"
 
                 sh "ls -alh /opt/app-root/bin/packer"
                 sh "ls -alh /dev/kvm"
