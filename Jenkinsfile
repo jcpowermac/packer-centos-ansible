@@ -38,7 +38,7 @@ spec:
 
                 sh "ls -alh /opt/app-root/bin/packer"
                 sh "ls -alh /dev/kvm"
-                sh "/opt/app-root/bin/packer build -debug centos7.json"
+                sh "/opt/app-root/bin/packer build centos7.json"
             }
         }
     }

@@ -4,7 +4,7 @@
       "vm_name": "centos.qcow2",
       "type": "qemu",
       "iso_checksum_type": "none",
-      "iso_url": "http://isoredirect.centos.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1804.iso",
+      "iso_url": "http://repo.miserver.it.umich.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1804.iso",
       "output_directory": "/build/output",
       "ssh_wait_timeout": "30s",
       "shutdown_command": "shutdown -P now",
