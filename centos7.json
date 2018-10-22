@@ -22,7 +22,7 @@
       "ssh_port": 22,
       "ssh_wait_timeout": "90m",
       "net_device": "virtio-net",
-      "disk_interface": "virtio-scsi",
+      "disk_interface": "virtio",
       "vnc_port_min": 5900,
       "vnc_port_max": 5900,
       "qemu_binary": "/usr/libexec/qemu-kvm",
