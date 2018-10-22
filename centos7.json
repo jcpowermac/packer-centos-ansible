@@ -1,9 +1,4 @@
 {
-  "provisioners": [{
-    "type": "ansible",
-    "playbook_file": "main.yml",
-    "groups": ["packer"]
-  }],
   "builders": [{
       "name": "centos",
       "vm_name": "centos.qcow2",
