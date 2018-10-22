@@ -25,7 +25,7 @@
       "disk_interface": "virtio-scsi",
       "vnc_port_min": 5900,
       "vnc_port_max": 5900,
-      "qemu_binary": "/usr/bin/qemu-kvm",
+      "qemu_binary": "/usr/libexec/qemu-kvm",
       "boot_command": [
         "<tab> append initrd=initrd.img inst.text inst.gpt inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
       ]
